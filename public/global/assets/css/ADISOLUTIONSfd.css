@@ -1,0 +1,18 @@
+.horizontal-menu .bottom-navbar{
+    background: #b12096 !important;
+}
+.wizard-card .moving-tab{
+    background-color: #b12096 !important;
+}
+.fresh-table.toolbar-color-orange .fixed-table-toolbar{
+    background: #b12096 !important;
+}
+.fresh-table .bootstrap-table .table > thead > tr > th{
+    color: #b12096 !important;
+}
+.fresh-table a:hover, .fresh-table a:focus{
+    color: #b12096 !important;
+}
+.text-orange{
+    color: #b12096 !important;
+}

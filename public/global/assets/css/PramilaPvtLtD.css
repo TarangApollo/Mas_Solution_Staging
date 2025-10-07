@@ -1,0 +1,24 @@
+/* header color */
+.navbar .navbar-menu-wrapper, 
+.navbar .navbar-menu-wrapper .navbar-toggler,
+.fresh-table.toolbar-color-orange .fixed-table-toolbar {
+    background: #0000ff !important;
+}
+
+/* menu hover color */
+.sidebar .nav .nav-item:not(:nth-child(1)).active > .nav-link .menu-title, 
+.sidebar .nav .nav-item:not(:nth-child(1)).active > .nav-link i,
+.sidebar .nav.sub-menu .nav-item .nav-link:hover,
+.sidebar .nav .nav-item:not(:nth-child(1)).active .sub-menu .nav-link.active,
+.sidebar .nav .nav-item:not(:nth-child(1)).active .sub-menu .nav-link,
+.nav-link:hover, .nav-link:focus,
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item.dropdown .dropdown-menu.navbar-dropdown .dropdown-item i  {
+    color: #0080ff !important;
+}
+
+/* Only Icon Menu Background Color */
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapse,
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapsing,
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .nav-link .menu-title{
+    background: #00ffff !important;
+}

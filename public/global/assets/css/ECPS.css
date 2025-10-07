@@ -1,0 +1,22 @@
+/* header color */
+.navbar .navbar-menu-wrapper, 
+.navbar .navbar-menu-wrapper .navbar-toggler{
+    background: #78bfdd !important;
+}
+
+/* menu hover color */
+.sidebar .nav .nav-item:not(:nth-child(1)).active > .nav-link .menu-title, 
+.sidebar .nav .nav-item:not(:nth-child(1)).active > .nav-link i,
+.sidebar .nav.sub-menu .nav-item .nav-link:hover,
+.sidebar .nav .nav-item:not(:nth-child(1)).active .sub-menu .nav-link.active,
+.sidebar .nav .nav-item:not(:nth-child(1)).active .sub-menu .nav-link,
+.nav-link:hover, .nav-link:focus {
+    color: #56a9cd !important;
+}
+
+/* Only Icon Menu Background Color */
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapse,
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .collapsing,
+.sidebar-icon-only .sidebar .nav .nav-item.hover-open .nav-link .menu-title{
+    background: #418aaa !important;
+}

@@ -1,0 +1,248 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "mas-solution";
+  src:url("fonts/mas-solution.eot");
+  src:url("fonts/mas-solution.eot?#iefix") format("embedded-opentype"),
+    url("fonts/mas-solution.woff") format("woff"),
+    url("fonts/mas-solution.ttf") format("truetype"),
+    url("fonts/mas-solution.svg#mas-solution") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "mas-solution" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="mas-"]:before,
+[class*=" mas-"]:before {
+  font-family: "mas-solution" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mas-1x { font-size: 1.1rem; }
+.mas-2x { font-size: 2em; }
+.mas-3x { font-size: 3em; }
+
+.mas-refresh:before {
+  content: "\61";
+}
+.mas-columns:before {
+  content: "\62";
+}
+.mas-edit:before {
+  content: "\63";
+}
+.mas-add-complaint:before {
+  content: "\64";
+}
+.mas-list:before {
+  content: "\65";
+}
+.mas-user:before {
+  content: "\66";
+}
+.mas-log-out:before {
+  content: "\67";
+}
+.mas-refresh-thin:before {
+  content: "\68";
+}
+.mas-arrow-down:before {
+  content: "\6a";
+}
+.mas-add-complaints:before {
+  content: "\69";
+}
+.mas-info-circle:before {
+  content: "\6b";
+}
+.mas-menu-bars:before {
+  content: "\6c";
+}
+.mas-envelope:before {
+  content: "\6d";
+}
+.mas-lock:before {
+  content: "\6e";
+}
+.mas-check:before {
+  content: "\6f";
+}
+.mas-angle-double-right:before {
+  content: "\71";
+}
+.mas-angle-double-left:before {
+  content: "\72";
+}
+.mas-dashboard:before {
+  content: "\70";
+}
+.mas-users:before {
+  content: "\73";
+}
+.mas-notification:before {
+  content: "\74";
+}
+.mas-settings:before {
+  content: "\75";
+}
+.mas-reports:before {
+  content: "\76";
+}
+.mas-package:before {
+  content: "\77";
+}
+.mas-calendar:before {
+  content: "\78";
+}
+.mas-service:before {
+  content: "\79";
+}
+.mas-company:before {
+  content: "\7a";
+}
+.mas-role:before {
+  content: "\41";
+}
+.mas-arrow-up:before {
+  content: "\42";
+}
+.mas-gear:before {
+  content: "\43";
+}
+.mas-plus-circle:before {
+  content: "\44";
+}
+.mas-trash:before {
+  content: "\45";
+}
+.mas-arrow-move:before {
+  content: "\46";
+}
+.mas-minus-circle:before {
+  content: "\47";
+}
+.mas-up-open-big:before {
+  content: "\48";
+}
+.mas-down-open-big:before {
+  content: "\49";
+}
+.mas-download:before {
+  content: "\4a";
+}
+.mas-calendar-1:before {
+  content: "\4b";
+}
+.mas-clock-o:before {
+  content: "\4c";
+}
+.mas-chevron-down:before {
+  content: "\4d";
+}
+.mas-chevron-up:before {
+  content: "\4e";
+}
+.mas-chevron-right:before {
+  content: "\4f";
+}
+.mas-chevron-left:before {
+  content: "\50";
+}
+.mas-close:before {
+  content: "\51";
+}
+.mas-history:before {
+  content: "\52";
+}
+.mas-week-calender:before {
+  content: "\53";
+}
+.mas-month-calender:before {
+  content: "\54";
+}
+.mas-comment:before {
+  content: "\55";
+}
+.mas-inquiry:before {
+  content: "\56";
+}
+.mas-upload:before {
+  content: "\57";
+}
+.mas-faq:before {
+  content: "\5a";
+}
+.mas-reference:before {
+  content: "\58";
+}
+.mas-change:before {
+  content: "\59";
+}
+.mas-reopen:before {
+  content: "\30";
+}
+.mas-plus:before {
+  content: "\31";
+}
+.mas-minus:before {
+  content: "\32";
+}
+.mas-tags:before {
+  content: "\34";
+}
+.mas-distributor:before {
+  content: "\35";
+}
+.mas-company-1:before {
+  content: "\36";
+}
+.mas-quote-left:before {
+  content: "\37";
+}
+.mas-quote-right:before {
+  content: "\38";
+}
+.mas-home:before {
+  content: "\39";
+}
+.mas-map-marker:before {
+  content: "\21";
+}
+.mas-inventory:before {
+  content: "\22";
+}
+.mas-project:before {
+  content: "\23";
+}
+.mas-return:before {
+  content: "\22";
+}
+.mas-return-box:before {
+  content: "\24";
+}
+.mas-eye:before {
+  content: "\25";
+}
+.mas-eye-slash:before {
+  content: "\26";
+}

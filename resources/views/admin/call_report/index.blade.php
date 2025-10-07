@@ -1,0 +1,587 @@
+@extends('layouts.admin')
+
+@section('title', 'Call List')
+
+@section('content')
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
+    <!-- partial -->
+    <div class="main-panel">
+        <div class="content-wrapper pb-0">
+            <div class="page-header">
+                <h3>List of Calls</h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Reports</li>
+                        <li class="breadcrumb-item active"> Call List </li>
+                    </ol>
+                </nav>
+            </div>
+            <!-- first row starts here -->
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <h4 class="card-title mt-0">search by categories</h4>
+                            <form class="was-validated p-4 pb-3" action="{{ route('call_report.index') }}" method="post">
+                                @csrf
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Search by Complaint ID</label>
+                                            <input type="text" class="form-control" name="searchText" id="searchText"
+                                                value="{{ (isset($postarray['searchText']) && $postarray['searchText']) != null ? $postarray['searchText'] : '' }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select OEM Company</label>
+                                            <select class="js-example-basic-single" name="OEMCompany" id="OEMCompany"
+                                                style="width: 100%;">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                @foreach ($CompanyMaster as $Company)
+                                                    <option value="{{ $Company->iCompanyId }}"
+                                                        {{ isset($postarray['OEMCompany']) && $postarray['OEMCompany'] == $Company->iCompanyId ? 'selected' : '' }}>
+                                                        {{ $Company->strOEMCompanyName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select System</label>
+                                            <select class="js-example-basic-single" name="iSystemId" id="iSystemId"
+                                                style="width: 100%;">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                @foreach ($systems as $system)
+                                                    <option value="{{ $system->iSystemId }}"
+                                                        {{ isset($postarray['iSystemId']) && $postarray['iSystemId'] == $system->iSystemId ? 'selected' : '' }}>
+                                                        {{ $system->strSystem }}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Ticket Status</label>
+                                            <select class="js-example-basic-single" style="width: 100%;"
+                                                name="TicketStatus">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                <option value="0"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 0 ? 'selected' : '' }}>
+                                                    Open</option>
+                                                <option value="3"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 3 ? 'selected' : '' }}>
+                                                    Reopen</option>
+                                                <option value="1"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 1 ? 'selected' : '' }}>
+                                                    Closed</option>
+
+                                                <option value="5"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 5 ? 'selected' : '' }}>
+                                                    Customer Feedback Awaited </option>
+                                                <option value="4"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 4 ? 'selected' : '' }}>
+                                                    Closed with RMA</option>
+                                                <option value="6"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 6 ? 'selected' : '' }}>
+                                                    Open < 24</option>
+                                                <option value="7"
+                                                    {{ isset($postarray['TicketStatus']) && $postarray['TicketStatus'] == 7 ? 'selected' : '' }}>
+                                                    Open > 24</option>
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Executive Level</label>
+                                            <select class="js-example-basic-single" style="width: 100%;" name="LevelId"
+                                                id="LevelId">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                <option value="1"
+                                                    {{ isset($postarray['LevelId']) && $postarray['LevelId'] == 1 ? 'selected' : '' }}>
+                                                    Level 1</option>
+                                                <option value="2"
+                                                    {{ isset($postarray['LevelId']) && $postarray['LevelId'] == 2 ? 'selected' : '' }}>
+                                                    Level 2</option>
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Call Outcome</label>
+                                            <select class="js-example-basic-single" style="width: 100%;" name="CallOutcome"
+                                                id="CallOutcome">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                <option value="answered"
+                                                    {{ isset($postarray['CallOutcome']) && $postarray['CallOutcome'] == 'answered' ? 'selected' : '' }}>
+                                                    Answered</option>
+                                                <option value="missed"
+                                                    {{ isset($postarray['CallOutcome']) && $postarray['CallOutcome'] == 'missed' ? 'selected' : '' }}>
+                                                    Missed</option>
+                                                <!-- <option value="OP">No Answer</option> -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Date Range</label>
+                                            <input type="text" class="form-control" id="datepicker"
+                                                value="{{ $postarray['daterange'] }}" name="daterange" />
+                                        </div>
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Call Attendant</label>
+                                            <select class="js-example-basic-single" style="width: 100%;" name="exeId"
+                                                id="exeId">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                @foreach ($executiveList as $user)
+                                                    <option value="{{ $user->iUserId }}"
+                                                        {{ isset($postarray['exeId']) && $postarray['exeId'] == $user->iUserId ? 'selected' : '' }}>
+                                                        {{ $user->strFirstName . ' ' . $user->strLastName }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Select Support type</label>
+                                            <select class="js-example-basic-single" name="iSupportType" id="iSupportType"
+                                                style="width: 100%;">
+                                                <option label="Please Select" value="">-- Select --</option>
+                                                @foreach ($supporttypes as $supporttype)
+                                                    <option value="{{ $supporttype->iSuppotTypeId }}"
+                                                        {{ isset($postarray['iSupportType']) && $postarray['iSupportType'] == $supporttype->iSuppotTypeId ? 'selected' : '' }}>
+                                                        {{ $supporttype->strSupportType }}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div> <!-- /.form-group -->
+                                    </div> <!-- /.col -->
+                                    <div class="col-md-4 mt-4">
+                                        <button type="button" class="btn btn-primary">
+                                            Total Calls <span
+                                                class="badge badge-light ml-5">{{ count($ticketList) ?? 0 }}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-fill btn-success text-uppercase mt-3 mr-2"
+                                    value="Search">
+                                <input type="button" onclick="clearData();"
+                                    class="btn btn-fill btn-default text-uppercase mt-3" value="Clear">
+                            </form>
+                        </div>
+                    </div>
+                    <!--card end-->
+                </div>
+            </div><!-- end row -->
+
+
+            <?php
+            $userid = Auth::user()->id;
+            $record = DB::table('reorder_columns')->where('strUrl', 'call_report.index')->where('iUserId', $userid)->first();
+            
+            $selectedOptions = [];
+            if ($record) {
+                $selectedOptions = json_decode($record->json, true); // Decode JSON as an associative array
+            }
+            
+            $options = ['ID', 'NO', 'OUTCOME', 'STATUS', 'DATE', 'AUDIO', 'SERVICE','PROJECT', 'SYSTEM', 'PROJECTTYPE', 'OPEN LEVEL', 'CLOSE LEVEL', 'DURATION', 'ATTENDANT', 'ACTIONS'];
+            $optionLabels = [
+                'ID' => 'No',
+                'NO' => 'Id',
+                'OUTCOME' => 'Outcome',
+                'STATUS' => 'Status',
+                'DATE' => 'Date',
+                'AUDIO' => 'Audio',
+                'SERVICE' => 'Oem Company',
+                'PROJECT' => 'Project',
+                'SYSTEM' => 'System',
+                'PROJECTTYPE' => 'Support type',
+                'OPEN LEVEL' => 'Open Level',
+                'CLOSE LEVEL' => 'Close Level',
+                'DURATION' => 'Duration',
+                'ATTENDANT' => 'Attendant',
+                'ACTIONS' => 'Actions'
+            ];
+            
+            // Use default options if no user-specific data is available
+            if (empty($selectedOptions)) {
+                $selectedOptions = $options;
+            }
+            ?>
+
+            <!-- multi-select row -->
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-md-10">
+                    <div class="row justify-content-center">
+                        <div class="col-md-9 d-flex justify-content-center align-items-center">
+                            <div class="d-flex text-left align-items-center w-100">
+                                <strong class="sl">Reorder Columns:</strong>
+
+                                <select id="multiple-checkboxes" multiple="multiple" required>
+                                    <?php foreach ($options as $option) { ?>
+                                    <option value="<?= $option ?>"
+                                        <?= in_array($option, $selectedOptions) ? 'selected' : '' ?>><?= $option ?></option>
+                                    <?php } ?>
+                                </select>
+
+                                <input type="button" id="submitCheckboxes"
+                                    class="btn btn-fill btn-success text-uppercase ml-3 d-flex justify-content-center align-items-center"
+                                    value="Save">
+                            </div>
+                        </div> <!-- /.col-md-9 -->
+                    </div> <!-- /.row justify-content-center -->
+                </div> <!-- /.col-md-10 -->
+            </div>
+            <!-- multi-select row END -->
+
+            <!-- table start -->
+            <div class="row d-flex justify-content-center my-5">
+                <div class="col-md-12">
+                    <div class="fresh-table toolbar-color-orange">
+                        <table id="fresh-table" class="table" data-show-export="true">
+                            <thead>
+                                <?php foreach ($selectedOptions as $option) {
+                        $label = $optionLabels[$option]; ?>
+                                <th data-field="<?= $option ?>"><?= $label ?></th>
+                                <?php } ?>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $iCounter = 1;
+                                $TotalMinutes = 0;
+                                ?>
+                                @foreach ($ticketList as $ticket)
+                                    <tr>
+                                        <?php if (in_array('NO', $selectedOptions)) { ?>
+                                        <td><?= $iCounter ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('ID', $selectedOptions)) { ?>
+                                        <td><?= $ticket->strTicketUniqueID ?? str_pad($ticket->iTicketId, 4, '0', STR_PAD_LEFT) ?>
+                                        </td>
+                                        <?php } ?>
+                                        <?php if (in_array('OUTCOME', $selectedOptions)) { ?>
+                                        <td><?= $ticket->call_state ?? '-' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('STATUS', $selectedOptions)) { ?>
+                                        <td><?= $ticket->ticketName ?? '-' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('DATE', $selectedOptions)) { ?>
+                                        <td>
+                                            <?= date('d-m-Y', strtotime($ticket->ComplainDate)) ?><br><small><?= date('H:i:s', strtotime($ticket->ComplainDate)) ?></small>
+                                        </td>
+                                        <?php }  ?>
+
+                                        <?php if (in_array('AUDIO', $selectedOptions)) { ?>
+                                        <td>
+                                            <audio controls>
+                                                <source src="<?= $ticket->recordUrl ?>" type="audio/mpeg">
+                                                <?= $ticket->recordUrl ?>
+                                            </audio>
+
+                                        </td>
+                                        <?php } ?>
+                                        <?php if (in_array('SERVICE', $selectedOptions)) { ?>
+                                        <td><?= $ticket->strOEMCompanyName ?? '-' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('PROJECT', $selectedOptions)) {
+                                            echo "<td>{$ticket->ProjectName}</td>";
+                                        } ?>
+                                        <?php if (in_array('SYSTEM', $selectedOptions)) { ?>
+                                        <td><?= $ticket->strSystem ?? '-' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('PROJECTTYPE', $selectedOptions)) { ?>
+                                        <td><?= $ticket->strSupportType ?? '-' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('OPEN LEVEL', $selectedOptions)) { ?>
+                                        <td><?= $ticket->openLevel == 1 ? 'Level 1' : 'Level 2' ?></td>
+                                        <?php } ?>
+                                        <?php if (in_array('CLOSE LEVEL', $selectedOptions)) { ?>
+                                        <td>
+                                            <?php
+                                            $subjects = \App\Models\TicketLog::where('iticketId', $ticket->iTicketId)
+                                                ->whereIn('iStatus', [1, 4, 5])
+                                                ->orderBy('iTicketLogId', 'DESC')
+                                                ->first();
+                                            if ($subjects) {
+                                                echo 'Level ' . $subjects->LevelId;
+                                            } elseif ($ticket->closelevel) {
+                                                echo 'Level ' . $ticket->closelevel;
+                                            } else {
+                                                echo 'Level ' . $ticket->openLevel;
+                                            }
+                                            ?>
+                                        </td>
+                                        <?php } ?>
+                                        <?php if (in_array('DURATION', $selectedOptions)) { ?>
+                                        <td>
+                                            <?php
+                                            $seconds = $ticket->callDuration;
+                                            $H = floor($seconds / 3600);
+                                            $i = ($seconds / 60) % 60;
+                                            $s = $seconds % 60;
+                                            echo sprintf('%02d:%02d:%02d', $H, $i, $s);
+                                            $TotalMinutes += $ticket->callDuration;
+                                            ?>
+                                        </td>
+                                        <?php } ?>
+                                        <?php if (in_array('ATTENDANT', $selectedOptions)) { ?>
+                                        <td><?= $ticket->first_name . ' ' . $ticket->last_name ?></td>
+                                        <?php } ?>
+                                        
+                                        <?php if (in_array('ACTIONS', $selectedOptions)) { ?>
+                                        <td>
+                                            <a href="<?= route('call_report.info', $ticket->iTicketId) ?>" title="Info"
+                                                class="table-action">
+                                                <i class="mas-info-circle"></i>
+                                            </a>
+                                        </td>
+                                        <?php } ?>
+                                    </tr>
+                                    <?php $iCounter++; ?>
+                                @endforeach
+
+                                <tr class="font-weight-bold">
+                                    <td colspan="8" class="text-right">Total Minutes</td>
+                                    <td colspan="2">
+                                        <?php
+                                        $seconds = $TotalMinutes;
+                                        $H = floor($seconds / 3600);
+                                        $i = ($seconds / 60) % 60;
+                                        $s = $seconds % 60;
+                                        echo sprintf('%02d:%02d:%02d', $H, $i, $s);
+                                        ?>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- table end -->
+
+        </div>
+
+    </div>
+    <!-- main-panel ends -->
+
+@endsection
+@section('script')
+    <script type="text/javascript" src="{{ asset('global/assets/vendors/bootstrap-table/js/bootstrap-table.js') }}">
+    </script>
+    <script src="{{ asset('global/assets/vendors/multi-select/js/bootstrap-multiselect.js') }}"></script>
+    <script src="{{ asset('global/assets/vendors/multi-select/js/main.js') }}"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.table2excel.min.js"></script>
+
+
+    <script>
+        // $(function(){
+        //     getsystem();
+        //     getCallAttendant();
+        // });
+
+
+        function setSelectedDateRange() {
+            $("#strdaterange").val($("#datepicker").val());
+        }
+        $("#OEMCompany").change(function() {
+            getsystem();
+            getCallAttendant();
+            getSupportType();
+        });
+
+        function getsystem() {
+            var OEMCompany = $("#OEMCompany").val();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('call_report.getsystem') }}",
+                data: {
+                    OEMCompany: OEMCompany
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.length > 0) {
+                        $("#iSystemId").html(response);
+                    } else {
+
+                    }
+                }
+            });
+        }
+
+        function getCallAttendant() {
+            var OEMCompany = $("#OEMCompany").val();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('call_report.getCallAttendant') }}",
+                data: {
+                    OEMCompany: OEMCompany
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.length > 0) {
+                        $("#exeId").html(response);
+                    } else {
+
+                    }
+                }
+            });
+        }
+
+        function getSupportType() {
+            var OEMCompany = $("#OEMCompany").val();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('call_report.getSupportType') }}",
+                data: {
+                    OEMCompany: OEMCompany
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.length > 0) {
+                        $("#iSupportType").html(response);
+                    } else {
+
+                    }
+                }
+            });
+        }
+    </script>
+
+    <script type="text/javascript">
+        var $table = $('#fresh-table'),
+
+            full_screen = false;
+
+        $().ready(function() {
+            $table.bootstrapTable({
+                toolbar: ".toolbar",
+
+                showDownload: true,
+                showRefresh: true,
+                search: true,
+                showColumns: true,
+                pagination: true,
+                striped: true,
+                pageSize: 50,
+                pageList: [50, 100, 200, 300, 400],
+
+                formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                    //do nothing here, we don't want to show the text "showing x of y from..."
+                },
+                formatRecordsPerPage: function(pageNumber) {
+                    return pageNumber + " rows visible";
+                },
+                icons: {
+                    download: 'mas-download',
+                    refresh: 'mas-refresh',
+                    toggle: 'fa fa-th-list',
+                    columns: 'mas-columns',
+                    detailOpen: 'fa fa-plus-circle',
+                    detailClose: 'fa fa-minus-circle'
+                }
+            });
+
+            $(window).resize(function() {
+                $table.bootstrapTable('resetView');
+            });
+
+            window.operateEvents = {
+                'click .like': function(e, value, row, index) {
+                    alert('You click like icon, row: ' + JSON.stringify(row));
+                    console.log(value, row, index);
+                },
+                'click .edit': function(e, value, row, index) {
+                    alert('You click edit icon, row: ' + JSON.stringify(row));
+                    console.log(value, row, index);
+                },
+                'click .remove': function(e, value, row, index) {
+                    $table.bootstrapTable('remove', {
+                        field: 'id',
+                        values: [row.id]
+                    });
+                }
+            };
+        });
+        $(function() {
+            $('.mas-download').click(function(e) {
+                var table = $("#fresh-table");
+                if (table && table.length) {
+                    $(table).table2excel({
+                        exclude: ".noExl",
+                        name: "Excel Document Name",
+                        filename: "Call_List" + new Date().toISOString().replace(/[\-\:\.]/g, "") +
+                            ".xls",
+                        fileext: ".xls",
+                        exclude_img: true,
+                        exclude_links: false,
+                        exclude_inputs: false,
+                        preserveColors: false
+                    });
+                }
+            });
+
+            $('.mas-refresh').click(function(e) {
+                $('#fresh-table').bootstrapTable('resetSearch');
+            });
+        });
+
+        function clearData() {
+            window.location.href = "";
+        }
+
+        $(function() {
+            $("#datepicker").daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
+            $('#datepicker').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format(
+                    'MM/DD/YYYY'));
+            });
+            $('#datepicker').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#submitCheckboxes').click(function(e) {
+                e.preventDefault();
+
+                var selectedCheckboxes = $('#multiple-checkboxes').val();
+
+                $.ajax({
+                    url: "{{ route('call_report.reorder_column') }}", // Replace with your route
+                    type: 'POST',
+                    data: {
+                        checkboxes: selectedCheckboxes,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        window.location = "";
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error); // Handle error
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
